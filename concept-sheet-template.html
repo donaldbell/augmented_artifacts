@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MPL Concept Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page{
+    size: A4 landscape;
+    margin: 10mm;
+  }
+  :root{
+    --paper: #EFEAE1;
+    --paper-deep: #E6E0D4;
+    --ink: #1C1F22;
+    --steel: #3A4750;
+    --steel-soft: #8B96A0;
+    --signal: #F2B705;
+    --brick: #B5502F;
+    --line: rgba(28,31,34,0.16);
+  }
+  *{ box-sizing: border-box; }
+  html,body{
+    margin:0; padding:0;
+    background: #d9d3c5;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+  }
+  .toolbar{
+    max-width: 297mm;
+    margin: 20px auto 0;
+    padding: 0 16px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    gap: 10px;
+  }
+  .toolbar .note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing:.04em;
+    color: var(--steel);
+  }
+  .toolbar .btns{ display:flex; gap:10px; }
+  .toolbar button{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 9px 14px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .toolbar button.secondary{
+    background: transparent;
+    color: var(--steel);
+    border: 1px solid var(--steel-soft);
+  }
+  .toolbar button:hover{ opacity: .85; }
+
+  .sheet-wrap{
+    max-width: 297mm;
+    margin: 16px auto 60px;
+    padding: 16px;
+  }
+  .sheet{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 297 / 210;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 4.2% 4.4% 3.4%;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+    display:flex;
+    flex-direction: column;
+  }
+  /* registration / crop marks */
+  .mark{
+    position:absolute;
+    width: 16px; height:16px;
+    pointer-events:none;
+  }
+  .mark::before, .mark::after{
+    content:'';
+    position:absolute;
+    background: var(--ink);
+  }
+  .mark::before{ width:16px; height:1px; top:7px; left:0; }
+  .mark::after{ width:1px; height:16px; left:7px; top:0; }
+  .mark.tl{ top:10px; left:10px; }
+  .mark.tr{ top:10px; right:10px; }
+  .mark.bl{ bottom:10px; left:10px; }
+  .mark.br{ bottom:10px; right:10px; }
+
+  /* corner stamp */
+  .stamp{
+    position:absolute;
+    right: 4.4%;
+    bottom: 3.4%;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    opacity: .85;
+  }
+  .stamp svg{ flex-shrink:0; }
+  .stamp .word{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing:.08em;
+    text-transform: uppercase;
+    color: var(--steel);
+    line-height:1.5;
+    text-align:right;
+  }
+
+  /* header */
+  .head{
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    flex: 0 0 auto;
+  }
+  .head-left .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing:.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+  .head-left h1{
+    margin: 4px 0 0;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .head-right{
+    display:flex;
+    gap: 24px;
+    align-items: flex-end;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--steel);
+    text-transform: uppercase;
+    letter-spacing:.08em;
+  }
+  .head-right .field{ text-align:right; }
+  .head-right .field .lbl{ opacity:.7; margin-bottom:4px; }
+  .head-right [contenteditable]{
+    font-size: 12.5px;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: normal;
+    min-width: 60px;
+    outline:none;
+    border-bottom: 1px dashed var(--steel-soft);
+    padding-bottom: 1px;
+  }
+
+  /* label style shared */
+  .lbl-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing:.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--steel);
+    display:inline-block;
+    padding: 3px 7px;
+    margin-bottom: 8px;
+  }
+  .lbl-tag.alt{ background: var(--brick); }
+  .lbl-tag.signal{ background: var(--signal); color: var(--ink); }
+
+  [contenteditable]:empty:before{
+    content: attr(data-ph);
+    color: rgba(28,31,34,0.38);
+    font-style: italic;
+  }
+  [contenteditable]{ outline: none; }
+
+  /* bento grid */
+  .grid{
+    flex: 1 1 auto;
+    display:grid;
+    grid-template-columns: 27% 1fr 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 1.4%;
+    min-height: 0;
+  }
+  .cell{
+    border: 1px solid var(--ink);
+    background: #F7F4EE;
+    padding: 3% 3.2%;
+    position: relative;
+    min-height:0;
+    overflow: auto;
+  }
+
+  /* photo cell */
+  .photo-cell{
+    grid-row: 1 / 4;
+    padding: 0;
+    display:flex;
+    flex-direction: column;
+    background: var(--paper-deep);
+    overflow:hidden;
+  }
+  .photo-frame{
+    flex: 1;
+    min-height: 0;
+    border-bottom: 1px solid var(--ink);
+    background-size: cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+  }
+  .photo-frame .hint{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-align:center;
+    color: var(--steel);
+    letter-spacing:.06em;
+    padding: 0 16px;
+    line-height:1.6;
+  }
+  .photo-frame .hint span{ display:block; font-size: 20px; margin-bottom:6px; }
+  .photo-frame.has-img .hint{ display:none; }
+  .photo-cap{
+    flex: 0 0 auto;
+    padding: 9px 14px 11px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--steel);
+  }
+  .photo-cap .line{ margin-bottom: 5px; }
+  .photo-cap .line:last-child{ margin-bottom: 0; }
+  .photo-cap .lbl{ text-transform:uppercase; letter-spacing:.1em; opacity:.7; margin-right:6px;}
+  .photo-cap [contenteditable]{ display:inline; color: var(--ink); }
+
+  /* name / concept */
+  .name-cell{ grid-column: 2 / 4; grid-row: 1; }
+  .name-cell h2{
+    margin: 0;
+    font-family:'Fraunces', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.15;
+  }
+  .concept-cell{ grid-column: 2 / 4; grid-row: 2; }
+  .concept-cell .body-text{
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .challenge-cell{ grid-column: 2 / 3; grid-row: 3; }
+  .idea-cell{ grid-column: 3 / 4; grid-row: 3; border-color: var(--brick); }
+  .idea-cell .lbl-tag{ background: var(--brick); }
+
+  .brainstorm-cell{
+    grid-column: 1 / 4;
+    grid-row: 4;
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px),
+      #F7F4EE;
+    background-size: 20px 20px;
+  }
+  .brainstorm-cell .body-text{ font-size:13px; line-height:1.6; }
+
+  .body-text{ min-height: 1.4em; font-size: 13px; }
+
+  /* footer bar: Blocks / Materials / Specialists */
+  .foot{
+    grid-column: 1 / 4;
+    grid-row: 5;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.4%;
+  }
+  .foot .cell .body-text{ font-size: 12px; line-height: 1.45; }
+  .blocks-cell{ border-color: var(--brick); }
+  .blocks-cell .lbl-tag{ background: var(--brick); }
+  .materials-cell{ border-color: var(--steel); }
+  .specialists-cell{ border-color: var(--ink); }
+  .specialists-cell .lbl-tag{ background: var(--signal); color: var(--ink); }
+
+  input[type=file]{ display:none; }
+
+  @media (max-width: 820px){
+    .sheet{ aspect-ratio: auto; padding: 22px 18px 20px; }
+    .grid{ grid-template-columns: 1fr; grid-template-rows: none; }
+    .photo-cell{ grid-row: auto; }
+    .name-cell, .concept-cell, .challenge-cell, .idea-cell, .brainstorm-cell, .foot{ grid-column: 1 / 2; grid-row: auto; }
+    .foot{ grid-template-columns: 1fr; }
+    .head{ flex-direction:column; align-items:flex-start; gap:12px; }
+    .head-right{ gap:16px; }
+    .stamp{ display:none; }
+    .cell{ overflow: visible; }
+    .photo-frame{ min-height: 220px; }
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .toolbar{ display:none; }
+    .sheet-wrap{ margin:0; padding:0; max-width:none; }
+    .sheet{ border: 1px solid #000; box-shadow:none; width: 277mm; aspect-ratio: 277/190; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="note">Scales to fit your screen &middot; prints as one A4 landscape page</div>
+  <div class="btns">
+    <button class="secondary" onclick="resetSheet()">New entry</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</div>
+
+<div class="sheet-wrap">
+  <div class="sheet">
+    <span class="mark tl"></span><span class="mark tr"></span>
+    <span class="mark bl"></span><span class="mark br"></span>
+
+    <div class="head">
+      <div class="head-left">
+        <div class="eyebrow">Maker Project Lab — Barcelona</div>
+        <h1>Field Concept Sheet</h1>
+      </div>
+      <div class="head-right">
+        <div class="field">
+          <div class="lbl">Specimen No.</div>
+          <div contenteditable="true" data-ph="001">001</div>
+        </div>
+        <div class="field">
+          <div class="lbl">Date</div>
+          <div contenteditable="true" data-ph="DD.MM.YY"></div>
+        </div>
+        <div class="field">
+          <div class="lbl">Neighborhood</div>
+          <div contenteditable="true" data-ph="e.g. Gràcia"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <div class="cell photo-cell">
+        <label class="photo-frame" id="photoFrame">
+          <input type="file" accept="image/*" onchange="loadPhoto(event)">
+          <div class="hint"><span>&#9633;</span>Tap to add photo<br>of the object</div>
+        </label>
+        <div class="photo-cap">
+          <div class="line"><span class="lbl">Spotted at</span><span contenteditable="true" data-ph="street, shop, or context"></span></div>
+          <div class="line"><span class="lbl">Measurements</span><span contenteditable="true" data-ph="approx. W × H × D, cm"></span></div>
+        </div>
+      </div>
+
+      <div class="cell name-cell">
+        <span class="lbl-tag">Object / Idea Name</span>
+        <h2 contenteditable="true" data-ph="Working title&hellip;"></h2>
+      </div>
+
+      <div class="cell concept-cell">
+        <span class="lbl-tag alt">Concept</span>
+        <div class="body-text" contenteditable="true" data-ph="One sentence: what if this object did something else, or did it better?"></div>
+      </div>
+
+      <div class="cell challenge-cell">
+        <span class="lbl-tag">Challenge</span>
+        <div class="body-text" contenteditable="true" data-ph="What's broken, missing, awkward, or frustrating about it as-is?"></div>
+      </div>
+
+      <div class="cell idea-cell">
+        <span class="lbl-tag">Idea</span>
+        <div class="body-text" contenteditable="true" data-ph="Your proposed redesign, fix, or augmentation."></div>
+      </div>
+
+      <div class="cell brainstorm-cell">
+        <span class="lbl-tag signal">Brainstorm</span>
+        <div class="body-text" contenteditable="true" data-ph="Loose variations, tangents, half-formed thoughts &mdash; the messy layer."></div>
+      </div>
+
+      <div class="foot">
+        <div class="cell blocks-cell">
+          <span class="lbl-tag">Blocks</span>
+          <div class="body-text" contenteditable="true" data-ph="What's stopping this &mdash; permits, access, skills, cost, unknowns."></div>
+        </div>
+        <div class="cell materials-cell">
+          <span class="lbl-tag">Materials</span>
+          <div class="body-text" contenteditable="true" data-ph="What it would take to build &mdash; parts, stock, hardware."></div>
+        </div>
+        <div class="cell specialists-cell">
+          <span class="lbl-tag">Specialists</span>
+          <div class="body-text" contenteditable="true" data-ph="Who you'd need &mdash; electrician, welder, upholsterer, fab shop."></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stamp">
+      <svg width="24" height="21" viewBox="0 0 30 26">
+        <polygon points="15,1 28,7.5 28,18.5 15,25 2,18.5 2,7.5" fill="none" stroke="#3A4750" stroke-width="1.2"/>
+        <path d="M15 6 C18 6 18 12.5 15 12.5 C12 12.5 12 6 15 6 Z M15 13.5 C18 13.5 18 20 15 20 C12 20 12 13.5 15 13.5 Z M9.5 12.5 C9.5 9.5 16 9.5 16 12.5 C16 15.5 9.5 15.5 9.5 12.5 Z M14 12.5 C14 9.5 20.5 9.5 20.5 12.5 C20.5 15.5 14 15.5 14 12.5 Z" fill="none" stroke="#3A4750" stroke-width="0.8"/>
+      </svg>
+      <div class="word">Filed for the archive<br>one object &middot; one sheet</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function loadPhoto(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const frame = document.getElementById('photoFrame');
+    frame.style.backgroundImage = `url(${ev.target.result})`;
+    frame.classList.add('has-img');
+  };
+  reader.readAsDataURL(file);
+}
+function resetSheet(){
+  if(!confirm('Clear this sheet for a new entry?')) return;
+  document.querySelectorAll('[contenteditable]').forEach(el => el.innerHTML = '');
+  const frame = document.getElementById('photoFrame');
+  frame.style.backgroundImage = '';
+  frame.classList.remove('has-img');
+}
+</script>
+
+</body>
+</html>
