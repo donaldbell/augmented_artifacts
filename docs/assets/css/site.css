@@ -1,0 +1,301 @@
+/* Field Archive — shared design system
+   Carried over from concept-sheet-template.html / field-archive-site-preview.html.
+   Do not reinterpret the palette, type, or motifs here without checking both references. */
+
+:root{
+  --paper: #EFEAE1;
+  --paper-deep: #E6E0D4;
+  --ink: #1C1F22;
+  --steel: #3A4750;
+  --steel-soft: #8B96A0;
+  --signal: #F2B705;
+  --brick: #B5502F;
+  --line: rgba(28,31,34,0.14);
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; }
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+.wrap{ max-width: 1180px; margin:0 auto; padding: 0 28px; }
+
+/* top bar */
+.topbar{ border-bottom: 2px solid var(--ink); padding: 18px 0; }
+.topbar .row{ display:flex; justify-content:space-between; align-items:baseline; }
+.wordmark{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.wordmark a{ text-decoration:none; }
+.wordmark b{ color: var(--ink); }
+.wordmark span{ color: var(--steel-soft); margin: 0 6px; }
+.tally{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--steel);
+  letter-spacing:.06em;
+}
+
+/* hero (specimen detail page) */
+.hero{
+  display:grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  padding: 56px 0 40px;
+  align-items:start;
+}
+.hero-photo{ border: 1px solid var(--ink); padding: 10px; background: var(--paper-deep); }
+.hero-photo img{ width:100%; height:auto; }
+.hero-photo.no-photo{
+  aspect-ratio: 4/3;
+  display:flex; align-items:center; justify-content:center;
+}
+.hero-photo.no-photo .hint{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--steel-soft);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.hero-cap{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--steel);
+  padding-top: 8px;
+  letter-spacing:.04em;
+}
+
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color: var(--steel);
+}
+.hero-right h1{
+  margin: 8px 0 20px;
+  font-family:'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.meta-row{ display:flex; flex-wrap:wrap; gap: 8px; margin-bottom: 26px; }
+.chip{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border: 1px solid var(--ink);
+  padding: 5px 10px;
+}
+.datafields{ border-top: 1px solid var(--line); }
+.datafield{
+  display:grid;
+  grid-template-columns: 130px 1fr;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.datafield .lbl{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color: var(--steel);
+  padding-top:2px;
+}
+.datafield .val{ font-size: 14px; line-height:1.5; white-space: pre-line; }
+.datafield .val.muted{ color: var(--steel-soft); font-style:italic; }
+
+/* branches section */
+.branch-header{ display:flex; align-items:baseline; gap: 14px; padding: 8px 0 6px; }
+.branch-header h2{ font-family:'Fraunces', serif; font-weight: 500; font-size: 22px; margin:0; }
+.branch-header .count{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--steel);
+  letter-spacing:.06em;
+}
+
+/* generalized dashed "tree" connector — works for any number of concept cards,
+   since each card grows its own stem rather than an SVG computed for a fixed count */
+.tree{
+  height: 30px;
+  position: relative;
+  border-bottom: 1px dashed var(--steel-soft);
+  margin-top: 8px;
+}
+.tree::before{
+  content:'';
+  position:absolute;
+  left:50%; top:-14px; bottom:0;
+  border-left: 1px dashed var(--steel-soft);
+}
+
+.concepts{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  padding-top: 20px;
+  padding-bottom: 70px;
+}
+.concept-card{
+  position: relative;
+  border: 1px solid var(--ink);
+  background: #F7F4EE;
+  display:flex;
+  flex-direction:column;
+}
+.concept-card::before{
+  content:'';
+  position:absolute;
+  top:-20px; left:50%;
+  height:20px;
+  border-left: 1px dashed var(--steel-soft);
+}
+.concept-art{ border-bottom: 1px solid var(--ink); background: var(--paper-deep); overflow:hidden; }
+.concept-art img{ width:100%; height: 240px; object-fit: cover; display:block; }
+.concept-art.no-art{ height:240px; display:flex; align-items:center; justify-content:center; }
+.concept-art.no-art .hint{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--steel-soft);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.concept-body{ padding: 22px 24px 26px; }
+.concept-id{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing:.1em;
+  color: var(--steel-soft);
+  margin-bottom: 8px;
+}
+.concept-body h3{
+  font-family:'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 21px;
+  line-height:1.3;
+  margin: 0 0 18px;
+}
+.lbl-tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color: var(--paper);
+  background: var(--steel);
+  display:inline-block;
+  padding: 3px 7px;
+  margin: 14px 0 6px;
+}
+.lbl-tag:first-of-type{ margin-top:0; }
+.lbl-tag.alt{ background: var(--brick); }
+.lbl-tag.signal{ background: var(--signal); color: var(--ink); }
+.field-text{ font-size: 13.5px; line-height:1.55; white-space: pre-line; }
+
+/* empty state — no concepts filed yet */
+.no-concepts{
+  border: 1px dashed var(--steel-soft);
+  padding: 34px 24px;
+  text-align:center;
+  margin-top: 20px;
+  margin-bottom: 70px;
+}
+.no-concepts .body-text{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color: var(--steel-soft);
+}
+
+/* archive index */
+.archive-intro{ padding: 40px 0 8px; }
+.archive-intro h1{
+  margin: 8px 0 0;
+  font-family:'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 36px;
+}
+.archive-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 32px 0 70px;
+}
+.archive-card{
+  display:block;
+  border: 1px solid var(--ink);
+  background: #F7F4EE;
+  text-decoration:none;
+  color: var(--ink);
+}
+.archive-photo{ border-bottom: 1px solid var(--ink); background: var(--paper-deep); overflow:hidden; aspect-ratio: 4/3; }
+.archive-photo img{ width:100%; height:100%; object-fit:cover; }
+.archive-photo.no-photo{ display:flex; align-items:center; justify-content:center; }
+.archive-photo.no-photo .hint{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--steel-soft);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.archive-body{ padding: 16px 18px 20px; }
+.archive-id{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing:.1em;
+  color: var(--steel-soft);
+  margin-bottom: 6px;
+}
+.archive-name{
+  font-family:'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  line-height:1.25;
+  margin: 0 0 10px;
+}
+.archive-meta{ display:flex; flex-wrap:wrap; gap:6px; }
+
+/* footer */
+.foot{
+  border-top: 2px solid var(--ink);
+  padding: 26px 0 60px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.foot .stampline{ display:flex; align-items:center; gap:10px; }
+.foot .word{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color: var(--steel);
+  line-height:1.5;
+}
+.foot .back{
+  font-family:'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom:2px;
+  text-decoration:none;
+}
+
+@media (max-width: 860px){
+  .hero{ grid-template-columns: 1fr; gap:28px; padding: 34px 0 24px; }
+  .hero-right h1{ font-size: 32px; }
+  .tree{ display:none; }
+  .concept-card::before{ display:none; }
+  .wrap{ padding: 0 20px; }
+}
