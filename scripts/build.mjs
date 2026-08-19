@@ -123,6 +123,7 @@ function pageShell({ prefix, title, tally, backLink, body }) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${prefix}assets/css/site.css">
+<link rel="icon" href="${prefix}assets/img/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="wrap">
@@ -336,6 +337,10 @@ async function main() {
   await copyFile(
     path.join(ROOT, 'assets', 'img', 'mpl-mark.svg'),
     path.join(DOCS, 'assets', 'img', 'mpl-mark.svg')
+  );
+  await copyFile(
+    path.join(ROOT, 'assets', 'img', 'favicon.svg'),
+    path.join(DOCS, 'assets', 'img', 'favicon.svg')
   );
 
   await writeFile(path.join(DOCS, 'index.html'), renderIndexPage(specimens));
