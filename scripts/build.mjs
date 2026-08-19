@@ -5,7 +5,7 @@
 // Requires Node 20+ (uses global fetch) and an AIRTABLE_TOKEN env var scoped
 // read-only to the base below.
 
-import { mkdir, readFile, writeFile, copyFile, rm } from 'node:fs/promises';
+import { mkdir, writeFile, copyFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -137,11 +137,8 @@ function pageShell({ prefix, title, tally, backLink, body }) {
 
   <div class="foot">
     <div class="stampline">
-      <svg width="26" height="23" viewBox="0 0 30 26">
-        <polygon points="15,1 28,7.5 28,18.5 15,25 2,18.5 2,7.5" fill="none" stroke="#3A4750" stroke-width="1.2"/>
-        <path d="M15 6 C18 6 18 12.5 15 12.5 C12 12.5 12 6 15 6 Z M15 13.5 C18 13.5 18 20 15 20 C12 20 12 13.5 15 13.5 Z M9.5 12.5 C9.5 9.5 16 9.5 16 12.5 C16 15.5 9.5 15.5 9.5 12.5 Z M14 12.5 C14 9.5 20.5 9.5 20.5 12.5 C20.5 15.5 14 15.5 14 12.5 Z" fill="none" stroke="#3A4750" stroke-width="0.8"/>
-      </svg>
-      <div class="word">Maker Project Lab<br>Barcelona field archive</div>
+      <img class="mpl-logo" src="${prefix}assets/img/mpl-logo.svg" alt="Maker Project Lab">
+      <div class="word">Barcelona field archive</div>
     </div>
     ${backLink}
   </div>
@@ -331,9 +328,14 @@ async function main() {
   console.log('Writing pages...');
   await mkdir(path.join(DOCS, 'specimens'), { recursive: true });
   await mkdir(path.join(DOCS, 'assets', 'css'), { recursive: true });
+  await mkdir(path.join(DOCS, 'assets', 'img'), { recursive: true });
   await copyFile(
     path.join(ROOT, 'assets', 'css', 'site.css'),
     path.join(DOCS, 'assets', 'css', 'site.css')
+  );
+  await copyFile(
+    path.join(ROOT, 'assets', 'img', 'mpl-logo.svg'),
+    path.join(DOCS, 'assets', 'img', 'mpl-logo.svg')
   );
 
   await writeFile(path.join(DOCS, 'index.html'), renderIndexPage(specimens));
