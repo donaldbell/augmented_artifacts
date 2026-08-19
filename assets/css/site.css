@@ -157,9 +157,17 @@ a{ color:inherit; }
   height:20px;
   border-left: 1px dashed var(--steel-soft);
 }
-.concept-art{ border-bottom: 1px solid var(--ink); background: var(--paper-deep); overflow:hidden; }
-.concept-art img{ width:100%; height: 240px; object-fit: cover; display:block; }
-.concept-art.no-art{ height:240px; display:flex; align-items:center; justify-content:center; }
+.concept-art{
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper-deep);
+  overflow:hidden;
+  aspect-ratio: 4/3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.concept-art img{ width:100%; height:100%; object-fit: contain; display:block; }
+.concept-art.no-art{ display:flex; align-items:center; justify-content:center; }
 .concept-art.no-art .hint{
   font-family:'IBM Plex Mono', monospace;
   font-size: 10.5px;
