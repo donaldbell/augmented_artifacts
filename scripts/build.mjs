@@ -137,8 +137,8 @@ function pageShell({ prefix, title, tally, backLink, body }) {
 
   <div class="foot">
     <div class="stampline">
-      <img class="mpl-logo" src="${prefix}assets/img/mpl-logo.svg" alt="Maker Project Lab">
-      <div class="word">Barcelona field archive</div>
+      <img class="mpl-mark" src="${prefix}assets/img/mpl-mark.svg" alt="Maker Project Lab">
+      <div class="word">Maker Project Lab<br>Barcelona field archive</div>
     </div>
     ${backLink}
   </div>
@@ -334,8 +334,8 @@ async function main() {
     path.join(DOCS, 'assets', 'css', 'site.css')
   );
   await copyFile(
-    path.join(ROOT, 'assets', 'img', 'mpl-logo.svg'),
-    path.join(DOCS, 'assets', 'img', 'mpl-logo.svg')
+    path.join(ROOT, 'assets', 'img', 'mpl-mark.svg'),
+    path.join(DOCS, 'assets', 'img', 'mpl-mark.svg')
   );
 
   await writeFile(path.join(DOCS, 'index.html'), renderIndexPage(specimens));

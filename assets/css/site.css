@@ -282,7 +282,7 @@ a{ color:inherit; }
   align-items:center;
 }
 .foot .stampline{ display:flex; align-items:center; gap:12px; }
-.foot .stampline .mpl-logo{ height: 28px; width:auto; display:block; }
+.foot .stampline .mpl-mark{ height: 28px; width:auto; display:block; }
 .foot .word{
   font-family:'IBM Plex Mono', monospace;
   font-size: 10px;
